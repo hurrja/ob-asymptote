@@ -5,7 +5,7 @@
 ;; Author: Eric Schulte
 ;; Maintainer: Jarmo Hurri <jarmo.hurri@iki.fi>
 ;; Version: 
-;; URL: https://github.com/jarmohurri/ob-asymptote
+;; URL: https://github.com/hurrja/ob-asymptote
 ;; Keywords: literate programming, reproducible research
 
 ;;; Commentary:
