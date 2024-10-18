@@ -55,24 +55,22 @@
   "Execute a block of Asymptote code.
 This function is called by `org-babel-execute-src-block'."
   (let* ((out-file (cdr (assq :file params)))
-         (format (or (file-name-extension out-file) "pdf"))
+         (out-format (or (file-name-extension out-file) "pdf"))
+         (cmd-output (if out-file
+		         (concat "-globalwrite -f " out-format " -o "
+                                 (file-name-sans-extension
+                                  (org-babel-process-file-name out-file)))
+		       "-V"))
          (cmdline (cdr (assq :cmdline params)))
          (in-file (org-babel-temp-file "asymptote-"))
-	 (out-file-path (if out-file
-			    (org-babel-process-file-name out-file)
-			  nil))
-         (cmd (concat "asy "
-		  (if out-file
-		      (concat "-globalwrite -f " format
-		              " -o " (file-name-sans-extension out-file-path))
-		    "-V")
-		  " " cmdline
-		  " " (org-babel-process-file-name in-file))))
+         (cmd (concat "asy " cmd-output " " cmdline " "
+                      (org-babel-process-file-name in-file))))
     (with-temp-file in-file
       (insert (org-babel-expand-body:generic
 	       body params
 	       (org-babel-variable-assignments:asymptote params))))
-    (message cmd) (shell-command cmd)
+    (message cmd)
+    (shell-command cmd)
     nil)) ;; signal that output has already been written to file
 
 (defun org-babel-prep-session:asymptote (_session _params)
