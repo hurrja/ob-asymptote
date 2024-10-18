@@ -1,6 +1,6 @@
 ;;; ob-asymptote.el --- Babel Functions for Asymptote -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2009-2023 Free Software Foundation, Inc.
+;; Copyright (C) 2009-2024 Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
 ;; Maintainer: Jarmo Hurri <jarmo.hurri@iki.fi>
@@ -55,16 +55,16 @@
   "Execute a block of Asymptote code.
 This function is called by `org-babel-execute-src-block'."
   (let* ((out-file (cdr (assq :file params)))
-         (format (or (file-name-extension out-file)
-                     "pdf"))
+         (format (or (file-name-extension out-file) "pdf"))
          (cmdline (cdr (assq :cmdline params)))
          (in-file (org-babel-temp-file "asymptote-"))
-         (cmd
-	  (concat "asy "
+	 (out-file-path (if out-file
+			    (org-babel-process-file-name out-file)
+			  nil))
+         (cmd (concat "asy "
 		  (if out-file
-		      (concat
-		       "-globalwrite -f " format
-		       " -o " (org-babel-process-file-name out-file))
+		      (concat "-globalwrite -f " format
+		              " -o " (file-name-sans-extension out-file-path))
 		    "-V")
 		  " " cmdline
 		  " " (org-babel-process-file-name in-file))))
