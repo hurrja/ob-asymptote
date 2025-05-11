@@ -1,0 +1,8 @@
+-*- mode: org; coding: utf-8 -*-
+
+* Version 1.0.2
+** Correct file name handling
+   Order of ~org-babel-process-file-name~ and
+   ~file-name-sans-extension~ is now correct (reversed from previous)
+   for proper file name processing on Windows platform. Thanks to
+   Taichi Kawabata for pointing out this issue.

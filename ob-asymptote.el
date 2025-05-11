@@ -1,10 +1,10 @@
 ;;; ob-asymptote.el --- Babel Functions for Asymptote -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2009-2024 Free Software Foundation, Inc.
+;; Copyright (C) 2009-2025 Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
 ;; Maintainer: Jarmo Hurri <jarmo.hurri@iki.fi>
-;; Version: 1.0.1
+;; Version: 1.0.2
 ;; URL: https://github.com/hurrja/ob-asymptote
 ;; Keywords: literate programming, reproducible research
 
@@ -58,8 +58,8 @@ This function is called by `org-babel-execute-src-block'."
          (out-format (or (file-name-extension out-file) "pdf"))
          (cmd-output (if out-file
 		         (concat "-globalwrite -f " out-format " -o "
-                                 (file-name-sans-extension
-                                  (org-babel-process-file-name out-file)))
+                                 (org-babel-process-file-name
+                                  (file-name-sans-extension out-file)))
 		       "-V"))
          (cmdline (cdr (assq :cmdline params)))
          (in-file (org-babel-temp-file "asymptote-"))
